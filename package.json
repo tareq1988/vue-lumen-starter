@@ -8,8 +8,12 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "bootstrap": "^4.1.1",
     "register-service-worker": "^1.0.0",
     "vue": "^2.5.16",
+    "vue-axios": "^2.1.1",
+    "vue-gravatar": "^1.2.1",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
   },
