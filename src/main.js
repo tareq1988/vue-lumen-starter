@@ -12,7 +12,7 @@ Vue.component('v-gravatar', Gravatar)
 
 Vue.config.productionTip = false
 
-window.apiUrl = 'http://lumen-starter.test'
+window.apiUrl = process.env.VUE_APP_API_ENDPOINT
 
 // set auth token if presen
 const token = localStorage.getItem('token')
