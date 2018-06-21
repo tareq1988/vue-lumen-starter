@@ -7,7 +7,9 @@ import Profile from './views/Profile.vue'
 import Login from './views/Login.vue'
 import Logout from './views/Logout.vue'
 import Signup from './views/Signup.vue'
-import PasswordReset from './views/PasswordReset.vue'
+import LostPassword from './views/LostPassword.vue'
+import ResetPassword from './views/ResetPassword.vue'
+import PageNotFound from './views/PageNotFound.vue'
 
 Vue.use(VueRouter)
 
@@ -33,12 +35,14 @@ const router = new VueRouter({
     {
       path: '/login',
       name: 'login',
-      component: Login
+      component: Login,
+      meta: { guestOnly: true }
     },
     {
       path: '/signup',
       name: 'signup',
-      component: Signup
+      component: Signup,
+      meta: { guestOnly: true }
     },
     {
       path: '/logout',
@@ -47,17 +51,27 @@ const router = new VueRouter({
       meta: { requiresAuth: true }
     },
     {
-      path: '/password-reset',
-      name: 'password-reset',
-      component: PasswordReset
+      path: '/lost-password',
+      name: 'lost-password',
+      component: LostPassword,
+      meta: { guestOnly: true }
     },
+    {
+      path: '/password-reset/:key',
+      name: 'reset-password',
+      component: ResetPassword,
+      meta: { guestOnly: true }
+    },
+    {
+      path: '*',
+      component: PageNotFound
+    }
   ]
 })
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    // this route requires auth, check if logged in
-    // if not, redirect to login page.
+
     if (!store.getters.isAuthenticated) {
       next({
         path: '/login',
@@ -69,6 +83,19 @@ router.beforeEach((to, from, next) => {
   } else {
     next()
   }
+
+  if (to.matched.some(record => record.meta.guestOnly)) {
+    if (store.getters.isAuthenticated) {
+      next({
+        path: '/'
+      })
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
+
 })
 
 export default router

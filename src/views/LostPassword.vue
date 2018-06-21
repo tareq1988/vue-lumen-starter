@@ -1,6 +1,8 @@
 <template>
-  <div class="page-forgot-pass container mb-5 mt-4">
-    <h1 class="mb-5">Reset Password</h1>
+  <div class="page-lost-pass container mb-5 mt-5">
+    <h1 class="mb-5 text-center">Lost Password</h1>
+
+    <div v-if="info" class="alert alert-success">We have e-mailed your password reset link!</div>
 
     <form action="" @submit.prevent="recover()">
       <div class="form-group">
@@ -19,30 +21,29 @@
 export default {
   name: 'PasswordReset',
 
-  beforeCreate () {
-    if (this.$store.getters.isAuthenticated) {
-      this.$router.push('/')
-    }
-  },
-
   data() {
     return {
-      email: ''
+      email: '',
+      info: false
     }
   },
 
   methods: {
     recover() {
-      alert('Not implemented')
+      this.$http.post(window.apiUrl + '/password/request', {email: this.email})
+      .then(response => {
+        this.info = true
+        this.email = ''
+      })
     }
   }
 }
 </script>
 
 <style lang="less">
-.page-forgot-pass {
+.page-lost-pass {
   width: 100%;
-  max-width: 320px;
+  max-width: 380px;
   margin: 0 auto;
 }
 </style>

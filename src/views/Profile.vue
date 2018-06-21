@@ -6,7 +6,7 @@
       <div class="row">
         <div class="col-md-3">
           <ul class="list-group list-group-flush">
-            <li class="list-group-item active">Authentication</li>
+            <li class="list-group-item active">Profile</li>
             <li class="list-group-item disabled">Billing</li>
           </ul>
         </div>

@@ -9,7 +9,7 @@
       </div>
 
       <div class="form-group">
-        <label for="login-pass" class="d-block">Password <router-link to="/password-reset" class="float-right small" tabindex="4">Lost your password?</router-link></label>
+        <label for="login-pass" class="d-block">Password <router-link to="/lost-password" class="float-right small" tabindex="4">Lost your password?</router-link></label>
         <input v-model.trim="password" class="form-control" id="login-pass" name="password" type="password" placeholder="Password" tabindex="2" required>
       </div>
 

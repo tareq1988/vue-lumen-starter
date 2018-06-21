@@ -1,17 +1,19 @@
 <template>
   <form class="form form-change_pass" @submit.prevent="changePassword">
-    <p v-if="passMessage" v-html="passMessage"></p>
+    <p v-if="passError" class="alert alert-danger" v-html="passError"></p>
+
+    <div v-if="passChanged" class="alert alert-success">Password changed successfully!</div>
 
     <div class="form-group">
-      <input v-model="pass.current" class="form-control" name="current" type="password" autocomplete="false" placeholder="Current Password" required>
+      <input v-model="pass.current" class="form-control" name="current" type="password" autocomplete="false" placeholder="Current password" required>
     </div>
 
     <div class="form-row form-group">
       <div class="col">
-        <input v-model.trim="pass.password" class="form-control" name="password" type="password" placeholder="New Password" autocomplete="false" required>
+        <input v-model.trim="pass.password" class="form-control" name="password" type="password" placeholder="New password" autocomplete="false" required>
       </div>
       <div class="col">
-        <input v-model.trim="pass.password_confirmation" class="form-control" name="password_confirmation" type="password" placeholder="Confirm Password" autocomplete="false" required>
+        <input v-model.trim="pass.password_confirmation" class="form-control" name="password_confirmation" type="password" placeholder="Confirm new password" autocomplete="false" required>
       </div>
     </div>
 
@@ -28,7 +30,8 @@ export default {
 
   data () {
     return {
-      passMessage: '',
+      passError: false,
+      passChanged: false,
       pass: {
         current: '',
         password: '',
@@ -39,7 +42,8 @@ export default {
 
   methods: {
     changePassword() {
-      this.passMessage = ''
+      this.passError = false
+      this.passChanged = false
 
       this.$http.post(window.apiUrl + '/me/password', this.pass)
       .then(response => {
@@ -53,7 +57,7 @@ export default {
           password_confirmation: ''
         }
 
-        this.passMessage = 'Password changed successfully!'
+        this.passChanged = true
       })
       .catch(err => {
         let response = err.response;
@@ -67,7 +71,7 @@ export default {
             }
           });
 
-          this.passMessage = message;
+          this.passError = message;
         }
       })
     }

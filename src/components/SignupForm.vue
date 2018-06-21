@@ -49,15 +49,17 @@
 </template>
 
 <script>
+import formError from '@/mixins/formError'
+
 export default {
 
   name: 'SignupForm',
 
+  mixins: [formError],
+
   data () {
     return {
       sending: false,
-      infoError: false,
-      errors: {},
       form: {
         first_name: '',
         last_name: '',
@@ -69,19 +71,9 @@ export default {
   },
 
   methods: {
-    hasError(field) {
-      return this.errors && this.errors.hasOwnProperty(field)
-    },
-
-    getError(field) {
-      if (this.hasError(field)) {
-        return this.errors[field][0]
-      }
-    },
 
     signup() {
       this.sending = true
-      this.infoError = false
       this.errors = {}
 
       this.$http.post(window.apiUrl + '/register', this.form)
@@ -91,9 +83,7 @@ export default {
         this.$router.push(this.$route.query.redirect || '/')
       })
       .catch(err => {
-        console.log(err.response.data)
         this.errors = err.response.data
-        this.infoError = true
       })
       .finally(() => this.sending = false)
     }

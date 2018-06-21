@@ -15,12 +15,6 @@ export default {
   components: {
     SignupForm,
   },
-
-  beforeCreate () {
-    if (this.$store.getters.isAuthenticated) {
-      this.$router.push('/')
-    }
-  },
 }
 </script>
 
