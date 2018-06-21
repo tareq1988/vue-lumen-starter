@@ -9,14 +9,17 @@
         <li class="nav-item"><router-link to="/about" class="nav-link">About</router-link></li>
         <li class="nav-item" v-if="!isAuthenticated"><router-link to="/login" class="nav-link">Login</router-link></li>
         <li class="nav-item" v-if="!isAuthenticated"><router-link to="/signup" class="nav-link">Signup</router-link></li>
-        <li class="nav-item align-middle" v-if="isAuthenticated">
-          <router-link to="/profile" class="nav-link">
-            <v-gravatar :email="userEmail" :size="48" width="24" class="rounded-circle border mr-2" />
-            <span class="">Profile</span>
-          </router-link>
-        </li>
         <li class="nav-item" v-if="isAuthenticated">
-          <router-link to="/logout" class="nav-link">Logout</router-link>
+          <div class="dropdown" @click.prevent="toggleDropdown">
+            <a href="#" class="nav-link dropdown-toggle py-0">
+              <v-gravatar :email="userEmail" :size="128" width="40" class="rounded-circle border mw-100 p-1" />
+            </a>
+
+            <div :class="['dropdown-menu', 'dropdown-menu-right', {'show': showDropdown}]">
+              <router-link to="/profile" class="dropdown-item">Profile</router-link>
+              <router-link to="/logout" class="dropdown-item">Logout</router-link>
+            </div>
+          </div>
         </li>
       </ul>
     </header>
@@ -54,6 +57,32 @@ export default {
       return this.$store.getters.user.first_name + ' ' + this.$store.getters.user.last_name
     }
   },
+
+  mounted() {
+    window.addEventListener('click', this.closeDropdown)
+  },
+
+  destroyed() {
+    window.removeEventListener('click', this.closeDropdown)
+  },
+
+  methods: {
+    toggleDropdown() {
+      this.showDropdown = !this.showDropdown
+    },
+
+    closeDropdown(e) {
+      let classes = e.target.parentNode.classList
+
+      if (typeof classes === 'undefined') {
+        return
+      }
+
+      if (!classes.contains('dropdown') && !classes.contains('dropdown-toggle')) {
+        this.showDropdown = false
+      }
+    }
+  }
 }
 </script>
 

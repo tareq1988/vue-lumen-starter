@@ -4,19 +4,19 @@
     <div class="form-row form-group">
       <div class="col">
         <label for="first-name">First Name</label>
-        <input v-model.trim="form.first_name" type="text" :class="['form-control', {'is-invalid': hasError('first_name') }]" id="first-name" placeholder="First name" required>
+        <input v-model.trim="form.first_name" type="text" :class="['form-control', {'is-invalid': hasError('first_name') }]" id="first-name" placeholder="First name" autocomplete="fname" required>
         <div class="text-danger small" v-if="hasError('first_name')">{{ getError('first_name') }}</div>
       </div>
       <div class="col">
         <label for="last-name">Last Name</label>
-        <input v-model.trim="form.last_name" type="text" :class="['form-control', {'is-invalid': hasError('last_name') }]" id="last-name" placeholder="Last name" required>
+        <input v-model.trim="form.last_name" type="text" :class="['form-control', {'is-invalid': hasError('last_name') }]" id="last-name" placeholder="Last name" autocomplete="lname" required>
         <div class="text-danger small" v-if="hasError('last_name')">{{ getError('last_name') }}</div>
       </div>
     </div>
 
     <div class="form-group">
       <label for="user-email">Email</label>
-      <input v-model.trim="form.email" type="text" :class="['form-control', {'is-invalid': hasError('email') }]" id="user-email" placeholder="you@domain.com" required>
+      <input v-model.trim="form.email" type="text" :class="['form-control', {'is-invalid': hasError('email') }]" id="user-email" placeholder="you@domain.com" autocomplete="email" required>
       <div class="text-danger small" v-if="hasError('email')">{{ getError('email') }}</div>
     </div>
 

@@ -5,12 +5,16 @@
     <div class="form-row form-group">
       <div class="col">
         <label for="first-name" class="small">First Name</label>
-        <input v-model.trim="form.first_name" type="text" class="form-control" id="first-name" placeholder="First name" required>
+        <input v-model.trim="form.first_name" type="text" class="form-control" id="first-name" placeholder="First name" autocomplete="fname" required>
       </div>
       <div class="col">
         <label for="last-name" class="small">Last Name</label>
-        <input v-model.trim="form.last_name" type="text" class="form-control" id="last-name" placeholder="Last name" required>
+        <input v-model.trim="form.last_name" type="text" class="form-control" id="last-name" placeholder="Last name" autocomplete="fname" required>
       </div>
+    </div>
+    <div class="form-group">
+      <label for="user-email" class="small">Email</label>
+      <input v-model.trim="form.email" type="text" class="form-control" id="user-email" placeholder="Your email address" autocomplete="email" required>
     </div>
 
     <div class="form-group text-right">
@@ -31,6 +35,7 @@ export default {
       form: {
         first_name: this.data.first_name,
         last_name: this.data.last_name,
+        email: this.data.email
       },
     };
   },
@@ -50,10 +55,7 @@ export default {
       this.sending = true
       this.profileMessage = ''
 
-      this.$http.post(window.apiUrl + '/me', {
-        'first_name': this.form.first_name,
-        'last_name': this.form.last_name
-      })
+      this.$http.post(window.apiUrl + '/me', this.form)
       .then(response => {
         delete response.data.api_token
 
@@ -70,5 +72,11 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="css">
+.list-group-item.active {
+  border-color: rgba(0,0,0,.125) !important;
+  border-left: 3px solid #007bff !important;
+  background: #fff !important;
+  color: #495057 !important;
+}
 </style>

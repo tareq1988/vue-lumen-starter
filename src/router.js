@@ -4,6 +4,8 @@ import store from './store'
 import Home from './views/Home.vue'
 import About from './views/About.vue'
 import Profile from './views/Profile.vue'
+import ProfileEdit from './views/ProfileEdit.vue'
+import ProfileSecurity from './views/ProfileSecurity.vue'
 import Login from './views/Login.vue'
 import Logout from './views/Logout.vue'
 import Signup from './views/Signup.vue'
@@ -15,6 +17,7 @@ Vue.use(VueRouter)
 
 const router = new VueRouter({
   // mode: 'history',
+  linkActiveClass: 'active',
   routes: [
     {
       path: '/',
@@ -30,7 +33,17 @@ const router = new VueRouter({
       path: '/profile',
       name: 'profile',
       component: Profile,
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: true },
+      children: [
+        {
+          path: '',
+          component: ProfileEdit
+        },
+        {
+          path: 'security',
+          component: ProfileSecurity
+        }
+      ]
     },
     {
       path: '/login',
