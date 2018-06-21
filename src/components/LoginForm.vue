@@ -14,7 +14,7 @@
       </div>
 
       <div class="form-group text-right">
-        <button class="btn btn-primary" tabindex="3">Login</button>
+        <button class="btn btn-primary" tabindex="3" :disabled="sending">Login</button>
       </div>
     </div>
   </form>
@@ -50,7 +50,6 @@ export default {
         this.$router.push(this.$route.query.redirect || '/')
       })
       .catch(response => {
-        console.log(response);
         this.infoError = true
       })
       .finally(() => this.sending = false)

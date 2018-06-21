@@ -1,16 +1,16 @@
 <template>
   <form class="form form-change_pass" @submit.prevent="changePassword">
-    <p v-if="passError" class="alert alert-danger" v-html="passError"></p>
-
     <div v-if="passChanged" class="alert alert-success">Password changed successfully!</div>
 
     <div class="form-group">
-      <input v-model="pass.current" class="form-control" name="current" type="password" autocomplete="false" placeholder="Current password" required>
+      <input v-model="pass.current" :class="['form-control', {'is-invalid': hasError('current') }]" name="current" type="password" autocomplete="false" placeholder="Current password" required>
+      <div class="text-danger small" v-if="hasError('current')">{{ getError('current') }}</div>
     </div>
 
     <div class="form-row form-group">
       <div class="col">
-        <input v-model.trim="pass.password" class="form-control" name="password" type="password" placeholder="New password" autocomplete="false" required>
+        <input v-model.trim="pass.password" :class="['form-control', {'is-invalid': hasError('password') }]" name="password" type="password" placeholder="New password" autocomplete="false" required>
+        <div class="text-danger small" v-if="hasError('password')">{{ getError('password') }}</div>
       </div>
       <div class="col">
         <input v-model.trim="pass.password_confirmation" class="form-control" name="password_confirmation" type="password" placeholder="Confirm new password" autocomplete="false" required>
@@ -18,19 +18,23 @@
     </div>
 
     <div class="form-group text-right">
-      <button class="btn btn-primary">Change Password</button>
+      <button class="btn btn-primary" :disabled="sending">Change Password</button>
     </div>
   </form>
 </template>
 
 <script>
+import formError from '@/mixins/formError'
+
 export default {
 
   name: 'PasswordForm',
 
+  mixins: [formError],
+
   data () {
     return {
-      passError: false,
+      sending: false,
       passChanged: false,
       pass: {
         current: '',
@@ -42,8 +46,9 @@ export default {
 
   methods: {
     changePassword() {
-      this.passError = false
+      this.errors = {}
       this.passChanged = false
+      this.sending = true
 
       this.$http.post(window.apiUrl + '/me/password', this.pass)
       .then(response => {
@@ -60,20 +65,9 @@ export default {
         this.passChanged = true
       })
       .catch(err => {
-        let response = err.response;
-        if (response.status === 422) {
-          let message = '';
-
-          Object.keys(response.data).forEach(item => {
-            let field = response.data[item];
-            for(let i = 0; i < field.length; i++){
-              message += field[i] + "<br />";
-            }
-          });
-
-          this.passError = message;
-        }
+        this.errors = err.response.data
       })
+      .finally(() => this.sending = false)
     }
   }
 };

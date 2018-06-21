@@ -42,7 +42,7 @@
     </div>
 
     <div class="form-group text-right">
-      <button class="btn btn-primary">Signup</button>
+      <button class="btn btn-primary" :disabled="sending">Signup</button>
     </div>
 
   </form>

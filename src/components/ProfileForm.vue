@@ -14,7 +14,7 @@
     </div>
 
     <div class="form-group text-right">
-      <button class="btn btn-primary">Update Profile</button>
+      <button class="btn btn-primary" :disabled="sending">Update Profile</button>
     </div>
   </form>
 </template>
@@ -26,6 +26,7 @@ export default {
 
   data () {
     return {
+      sending: false,
       profileMessage: '',
       form: {
         first_name: this.data.first_name,
@@ -46,6 +47,7 @@ export default {
 
   methods: {
     updateProfile() {
+      this.sending = true
       this.profileMessage = ''
 
       this.$http.post(window.apiUrl + '/me', {
@@ -62,6 +64,7 @@ export default {
       .catch(err => {
         console.log(err);
       })
+      .finally(() => this.sending = false)
     },
   }
 };
