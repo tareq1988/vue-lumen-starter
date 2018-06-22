@@ -16,7 +16,7 @@ import PageNotFound from './views/PageNotFound.vue'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
-  // mode: 'history',
+  mode: 'history',
   linkActiveClass: 'active',
   routes: [
     {
@@ -31,12 +31,12 @@ const router = new VueRouter({
     },
     {
       path: '/profile',
-      name: 'profile',
       component: Profile,
       meta: { requiresAuth: true },
       children: [
         {
           path: '',
+          name: 'profile',
           component: ProfileEdit
         },
         {

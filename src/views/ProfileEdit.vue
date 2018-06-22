@@ -12,6 +12,7 @@
 
 <script>
 import ProfileForm from '@/components/ProfileForm.vue'
+import Loading from '@/mixins/loading'
 
 export default {
 
@@ -21,9 +22,12 @@ export default {
     ProfileForm,
   },
 
+  mixins: [Loading],
+
   data () {
     return {
-      user: null
+      user: null,
+      loading: false,
     };
   },
 
@@ -34,6 +38,8 @@ export default {
   methods: {
 
     fetchProfile() {
+      this.loading = true
+
       this.$http.get(window.apiUrl + '/me')
       .then(response => {
         delete response.data.api_token
@@ -42,6 +48,7 @@ export default {
       .catch(err => {
         console.log(err);
       })
+      .finally(() => this.loading = false)
     },
   }
 };
