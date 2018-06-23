@@ -10,16 +10,17 @@
         <li class="nav-item" v-if="!isAuthenticated"><router-link to="/login" class="nav-link">Login</router-link></li>
         <li class="nav-item" v-if="!isAuthenticated"><router-link to="/signup" class="nav-link">Signup</router-link></li>
         <li class="nav-item" v-if="isAuthenticated">
-          <div class="dropdown" @click.prevent="toggleDropdown">
-            <a href="#" class="nav-link dropdown-toggle py-0">
-              <v-gravatar :email="userEmail" :size="128" width="40" class="rounded-circle border mw-100 p-1" />
-            </a>
-
-            <div :class="['dropdown-menu', 'dropdown-menu-right', {'show': showDropdown}]">
+          <dropdown dropdown-classes="dropdown-menu-right">
+            <template slot="button">
+              <a href="#" class="nav-link dropdown-toggle py-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <v-gravatar :email="userEmail" :size="128" width="40" class="rounded-circle border mw-100 p-1" />
+              </a>
+            </template>
+            <template slot="dropdown">
               <router-link to="/profile" class="dropdown-item">Profile</router-link>
               <router-link to="/logout" class="dropdown-item">Logout</router-link>
-            </div>
-          </div>
+            </template>
+          </dropdown>
         </li>
       </ul>
     </header>
@@ -35,9 +36,15 @@
 
 <script>
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Dropdown from '@/components/Dropdown.vue'
 
 export default {
   name: 'App',
+
+  components: {
+    Dropdown
+  },
+
   data() {
     return {
       showDropdown: false
@@ -53,35 +60,6 @@ export default {
       return this.$store.getters.user.email
     },
 
-    userName() {
-      return this.$store.getters.user.first_name + ' ' + this.$store.getters.user.last_name
-    }
-  },
-
-  mounted() {
-    window.addEventListener('click', this.closeDropdown)
-  },
-
-  destroyed() {
-    window.removeEventListener('click', this.closeDropdown)
-  },
-
-  methods: {
-    toggleDropdown() {
-      this.showDropdown = !this.showDropdown
-    },
-
-    closeDropdown(e) {
-      let classes = e.target.parentNode.classList
-
-      if (typeof classes === 'undefined') {
-        return
-      }
-
-      if (!classes.contains('dropdown') && !classes.contains('dropdown-toggle')) {
-        this.showDropdown = false
-      }
-    }
   }
 }
 </script>
