@@ -40,7 +40,7 @@ export default {
       this.sending = true
       this.infoError = false
 
-      this.$http.post(window.apiUrl + '/login', {
+      this.$http.post(this.$api('/login'), {
         email: this.email,
         password: this.password
       })

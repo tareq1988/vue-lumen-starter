@@ -12,7 +12,9 @@ Vue.component('v-gravatar', Gravatar)
 
 Vue.config.productionTip = false
 
-window.apiUrl = process.env.VUE_APP_API_ENDPOINT
+Vue.prototype.$api = function(endpoint) {
+  return process.env.VUE_APP_API_ENDPOINT + endpoint
+}
 
 // set auth token if presen
 const token = localStorage.getItem('token')

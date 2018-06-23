@@ -29,7 +29,7 @@ export default {
     recover() {
       this.sending = true
 
-      this.$http.post(window.apiUrl + '/password/request', {email: this.email})
+      this.$http.post(this.$api('/password/request'), {email: this.email})
       .then(response => {
         this.success = true
         this.email = ''

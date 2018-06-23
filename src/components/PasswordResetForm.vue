@@ -55,7 +55,7 @@ export default {
       this.changed = false
       this.changeError = false
 
-      this.$http.post(window.apiUrl + '/password/reset', this.form)
+      this.$http.post(this.$api('/password/reset'), this.form)
       .then(response => {
 
         if (response.data.success) {

@@ -50,7 +50,7 @@ export default {
       this.passChanged = false
       this.sending = true
 
-      this.$http.post(window.apiUrl + '/me/password', this.pass)
+      this.$http.post(this.$api('/me/password'), this.pass)
       .then(response => {
         this.$store.dispatch('login', response.data)
         this.$http.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.api_token

@@ -60,7 +60,7 @@ export default {
       this.sending = true
       this.profileMessage = ''
 
-      this.$http.post(window.apiUrl + '/me', this.form)
+      this.$http.post(this.$api('/me'), this.form)
       .then(response => {
         delete response.data.api_token
 

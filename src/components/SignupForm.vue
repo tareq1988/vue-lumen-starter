@@ -76,7 +76,7 @@ export default {
       this.sending = true
       this.errors = {}
 
-      this.$http.post(window.apiUrl + '/register', this.form)
+      this.$http.post(this.$api('/register'), this.form)
       .then(response => {
         this.$store.dispatch('login', response.data)
         this.$http.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.api_token

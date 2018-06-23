@@ -40,7 +40,7 @@ export default {
     fetchProfile() {
       this.loading = true
 
-      this.$http.get(window.apiUrl + '/me')
+      this.$http.get(this.$api('/me'))
       .then(response => {
         delete response.data.api_token
         this.user = response.data
