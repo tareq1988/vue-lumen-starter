@@ -14,7 +14,11 @@
     </div>
     <div class="form-group">
       <label for="user-email" class="small">Email</label>
-      <input v-model.trim="form.email" type="text" class="form-control" id="user-email" placeholder="Your email address" autocomplete="email" required>
+      <input v-model.trim="form.email" type="email" class="form-control" id="user-email" placeholder="Your email address" autocomplete="email" required>
+    </div>
+    <div class="form-group">
+      <label for="user-phone" class="small">Phone</label>
+      <input v-model.trim="form.phone" type="text" class="form-control" id="user-phone" placeholder="Your phone number" autocomplete="phone">
     </div>
 
     <div class="form-group text-right">
@@ -35,7 +39,8 @@ export default {
       form: {
         first_name: this.data.first_name,
         last_name: this.data.last_name,
-        email: this.data.email
+        email: this.data.email,
+        phone: this.data.phone,
       },
     };
   },

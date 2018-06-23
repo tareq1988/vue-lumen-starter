@@ -1,6 +1,6 @@
 <template>
   <form class="form form-login" @submit.prevent="login">
-    <div class="alert alert-danger" v-if="infoError">Login failed. Please try again.</div>
+    <div class="alert alert-danger" v-if="infoError">Invalid email or password. Please try again.</div>
 
     <div :class="{'is-waiting': sending}">
       <div class="form-group">
